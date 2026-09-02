@@ -16,7 +16,7 @@ fi
 
 . "$ENV_FILE"
 
-echo "API=$API"
+echo "PROD=$PROD"
 echo "REGISTRY=$REGISTRY"
 
 BOLD=$(tput setaf 5)
@@ -24,7 +24,7 @@ QSTN=$(tput setaf 6)
 INFO=$(tput setaf 2)
 DFLT=$(tput sgr0)
 
-echo "${INFO}Iniciando atualizacao do hermes_api em producao...${DFLT}"
+echo "${INFO}Iniciando atualizacao do $PROD_NAME em producao...${DFLT}"
 
 echo "${INFO}Parando container...${DFLT}"
 docker stop $PROD 2>/dev/null
@@ -39,7 +39,7 @@ echo "${INFO}Login no ambiente de containers...${DFLT}"
 docker login -u $LOGIN_REGISTRY -p "$PASSWD_REGISTRY" $REGISTRY 2>/dev/null
 
 echo "${INFO}Inicializando novo container...${DFLT}"
-echo "API=[$API]"
+echo "PROD=[$PROD]"
 echo "REGISTRY=[$REGISTRY]"
 echo "V1=[$V1]"
 echo "V2=[$V2]"
@@ -60,4 +60,4 @@ docker run -d \
     -v "$V2" \
     -v "$V3" \
     -v "$V4" \
-    "$REGISTRY/$PROD:latest"
+    "$REGISTRY_HERMES/$PROD:latest"
