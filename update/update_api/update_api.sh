@@ -10,7 +10,7 @@ echo "Project dir: $PROJECT_DIR"
 echo "Env file: $ENV_FILE"
 
 if [ ! -r "$ENV_FILE" ]; then
-    echo "ERRO: não consigo ler $ENV_FILE"
+    echo "ERRO: erro ao abrir $ENV_FILE"
     exit 1
 fi
 
@@ -24,13 +24,13 @@ QSTN=$(tput setaf 6)
 INFO=$(tput setaf 2)
 DFLT=$(tput sgr0)
 
-echo "${INFO}Iniciando atualizacao do hermes_api em producao...${DFLT}"
+echo "${INFO}Iniciando atualizacao do $API_NAME em producao...${DFLT}"
 
 echo "${INFO}Parando container...${DFLT}"
-docker stop $API 2>/dev/null
+docker stop $API_NAME 2>/dev/null
 
 echo "${INFO}Removendo container...${DFLT}"
-docker container rm $API 2>/dev/null
+docker container rm $API_NAME 2>/dev/null
 
 echo "${INFO}Removendo imagem...${DFLT}"
 docker rmi $REGISTRY/$API:latest 2>/dev/null
@@ -48,7 +48,7 @@ echo "IMAGE=[$REGISTRY/$API:latest]"
 
 docker run -d \
     --privileged=true \
-    --name "$API" \
+    --name "$API_NAME" \
     --restart always \
     --log-driver json-file \
     --log-opt max-size=10m \
@@ -59,4 +59,5 @@ docker run -d \
     -v "$V1" \
     -v "$V2" \
     -v "$V3" \
+    -v "$V4" \
     "$REGISTRY/$API:latest"

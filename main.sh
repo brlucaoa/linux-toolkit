@@ -2,7 +2,7 @@
 
 set -e
 
-LOG="/var/log/log_$(date +'%Y_%m_%d_%H_%M_%S').log"
+LOG="/var/log/toolkit_log_$(date +'%Y_%m_%d_%H_%M_%S').log"
 
 exec > >(tee -a "$LOG") 2>&1
 
